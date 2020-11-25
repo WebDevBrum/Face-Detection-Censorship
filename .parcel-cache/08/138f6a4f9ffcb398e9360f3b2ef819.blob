@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Censorship</title>
-  <link rel="stylesheet" href="./base.css">
+  <link rel="stylesheet" href="1cf228ca04cc64efe48baeb9b447b534">
 </head>
 
 <body>
@@ -13,9 +13,9 @@
     <canvas class="video"></canvas>
     <canvas class="face"></canvas>
   </div>
-  <script src="./pixelated-face.js"></script>
+  <script src="2d454fb7ab64c85b784ca46d28c1ffc3"></script>
 
-  <style>
+  <style data-parcel-key="219d92c950832326927cce38cae29190">
     * {
       box-sizing: border-box;
     }
