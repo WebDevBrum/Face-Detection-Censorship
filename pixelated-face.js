@@ -9,10 +9,23 @@ const canvas = document.querySelector(".video");
 const ctx = canvas.getContext("2d");
 
 const faceCanvas = document.querySelector(".face");
-const faceCtx = canvas.getContext("2d");
+const faceCtx = faceCanvas.getContext("2d");
 
 const faceDetector = new window.FaceDetector();
+const optionsInputs = document.querySelectorAll('.controls input[type="range"]');
 
+
+const options = {
+  SIZE: 10,
+  SCALE: 1.35,
+}
+
+function handleOption(event) {
+  const {value, name} = event.currentTarget;
+  options[name] = parseFloat(value);
+}
+
+optionsInputs.forEach(input => input.addEventListener('input', handleOption));
 
 // write a function that will populate the users video
 
@@ -46,6 +59,8 @@ function drawFace(face) {
 }
 
 function censor({boundingBox: face}) {
+  faceCtx.imageSmoothingEnabled = false;
+  faceCtx.clearRect(0, 0, faceCanvas.width, faceCanvas.height);
   // draw the smal face
   faceCtx.drawImage(
     // 5 source arg
@@ -57,12 +72,25 @@ function censor({boundingBox: face}) {
     // 4 draw args
     face.x, // where shall we start drawing at
     face.y,
-    face.width,
-    face.height
+    options.SIZE,
+    options.SIZE
 
   );
   // take that face back out and draw it back at normal size
-
+  const width = face.width * options.SCALE;
+  const height = face.height * options.SCALE
+  faceCtx.drawImage(
+    faceCanvas, // source
+    face.x,
+    face.y,
+    options.SIZE,
+    options.SIZE,
+    //drawing args
+    face.x - (width - face.width) / 2,
+    face.y - (height - face.height) / 2,
+    width,
+    height
+  );
 }
 
 populateVideo().then(detect);
